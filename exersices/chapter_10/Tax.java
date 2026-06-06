@@ -56,9 +56,7 @@ public class Tax {
             throw new IllegalArgumentException("Filing status can not be negative");
         }
 
-        double tax = 0.0;
-
-        tax = brackets[filingStatus][0] * rates[0];
+        double tax = brackets[filingStatus][0] * rates[0];
 
         for (int j = 1; j < brackets[filingStatus].length; j++) {
             tax += (brackets[filingStatus][j] - brackets[filingStatus][j - 1]) * rates[j];
@@ -66,7 +64,7 @@ public class Tax {
 
         tax += (taxableIncome - brackets[filingStatus][brackets[filingStatus].length - 1]) * rates[rates.length - 1];
 
-        return tax;
+        return (int)(tax * 100) / 100.0;
     }
 
     public int[][] getBrackets() {
