@@ -22,7 +22,7 @@ class A {
 }
 
 class B extends A {
-    public B() {        // super(0);
+    public B() {       
     }
 }
 
