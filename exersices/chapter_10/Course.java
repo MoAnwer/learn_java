@@ -40,6 +40,7 @@ public class Course {
         return courseName;
     }
 
+    // Exercise hear
     public void dropStudent(String student) {
         for (int i = 0; i < students.length; i++) {
             if (students[i] != null && students[i].equals(student)) {
