@@ -2,10 +2,13 @@ package exersices.chapter_10;
 
 public class Tax {
     /**
-     *  Write a test program that uses the Tax class to print the 2001 and 2009 tax tables for taxable
-     *  income from $50,000 to $60,000 with intervals of $1,000 for all four statuses.
-     *  The tax rates for the year 2009 were given in Table 3.2. The tax rates for 2001
-     *  are shown in Table 10.1.
+     * Write a test program that uses the Tax class to print the 2001 and 2009 tax
+     * tables for taxable
+     * income from $50,000 to $60,000 with intervals of $1,000 for all four
+     * statuses.
+     * The tax rates for the year 2009 were given in Table 3.2. The tax rates for
+     * 2001
+     * are shown in Table 10.1.
      */
     public static final int SINGLE_FILER = 0;
     public static final int MARRIED_JOINTLY_OR_QUALIFYING_WIDOW_ER = 1;
@@ -14,7 +17,7 @@ public class Tax {
 
     private int filingStatus;
 
-    // Store the tax brackets for each filing status 
+    // Store the tax brackets for each filing status
     private int[][] brackets;
 
     // Stores the tax rates for each bracket
@@ -23,30 +26,27 @@ public class Tax {
     // Stores teh taxable income
     private double taxableIncome;
 
-    public Tax()
-    {
+    public Tax() {
         this.filingStatus = SINGLE_FILER;
 
         this.brackets = new int[][] {
-            {8350, 33950, 82250, 171550, 372950},  // Single filer
-            {16700, 67900, 137050, 20885, 372950}, // Married jointly // -or qualifying widow(er)
-            {8350, 33950, 68525, 104425, 186475},  // Married separately
-            {11950, 45500, 117450, 190200, 372950} // Head of household
-        };  
+                { 8350, 33950, 82250, 171550, 372950 }, // Single filer
+                { 16700, 67900, 137050, 20885, 372950 }, // Married jointly // -or qualifying widow(er)
+                { 8350, 33950, 68525, 104425, 186475 }, // Married separately
+                { 11950, 45500, 117450, 190200, 372950 } // Head of household
+        };
 
-        rates = new double[] {0.10, 0.15, 0.25, 0.28, 0.33, 0.35};
+        rates = new double[] { 0.10, 0.15, 0.25, 0.28, 0.33, 0.35 };
     }
 
-    public Tax(int filingStatus, int[][] brackets, double[] rates, double taxableIncome) 
-    {
+    public Tax(int filingStatus, int[][] brackets, double[] rates, double taxableIncome) {
         this.filingStatus = filingStatus;
         this.brackets = brackets;
         this.rates = rates;
         this.taxableIncome = taxableIncome;
     }
 
-    public double getTax()
-    {
+    public double getTax() {
 
         if (this.filingStatus > 3) {
             throw new IllegalArgumentException("Filing status must be less than 3");
@@ -56,15 +56,17 @@ public class Tax {
             throw new IllegalArgumentException("Filing status can not be negative");
         }
 
-        double tax = brackets[filingStatus][0] * rates[0];
+        double tax = 0.0;
 
-        for (int j = 1; j < brackets[filingStatus].length; j++) {
-            tax += (brackets[filingStatus][j] - brackets[filingStatus][j - 1]) * rates[j];
+        for (int j = 1; j < brackets[filingStatus].length; j++) {                
+            tax += ((brackets[filingStatus][j] - 1) - brackets[filingStatus][j - 1]) * rates[j];
         }
-
+        
         tax += (taxableIncome - brackets[filingStatus][brackets[filingStatus].length - 1]) * rates[rates.length - 1];
 
-        return (int)(tax * 100) / 100.0;
+
+        return (int) (tax * 100) / 100.0;
+
     }
 
     public int[][] getBrackets() {
@@ -100,17 +102,43 @@ public class Tax {
     }
 
     public static void main(String[] args) {
-        IO.println("(0-single filer, 1-married jointly or qualifying widow(er),\n" + //
-                        "2-married separately, 3-head of household)");
+        // IO.println("(0-single filer, 1-married jointly or qualifying widow(er),\n" +
+        // //
+        // "2-married separately, 3-head of household)");
 
-        int filingStatus      = Integer.parseInt(IO.readln("Enter the filing status: "));
-        double taxableIncome  = Double.parseDouble(IO.readln("Enter the taxable income: "));
-        
+        int filingStatus = Integer.parseInt(IO.readln("Enter the filing status: "));
+        double taxableIncome = Double.parseDouble(IO.readln("Enter the taxable income: "));
+
         Tax taxCalc = new Tax();
-
         taxCalc.setFilingStatus(filingStatus);
         taxCalc.setTaxbleIncome(taxableIncome);
 
-        System.out.println("Tax of " + taxCalc.getTaxbaleIncome() + "$ = " + taxCalc.getTax() + "$");
+        
+        double tax = 0;
+        if (filingStatus == 0) { // Compute tax for single filers
+            if (taxableIncome <= 8350)
+                tax = taxableIncome * 0.10;
+            else if (taxableIncome <= 33950)
+                tax = 8350 * 0.10 + (taxableIncome - 8350) * 0.15;
+            else if (taxableIncome <= 82250)
+                tax = 8350 * 0.10 + (33950 - 8350) * 0.15 +
+                        (taxableIncome - 33950) * 0.25;
+            else if (taxableIncome <= 171550)
+                tax = 8350 * 0.10 + (33950 - 8350) * 0.15 +
+                        (82250 - 33950) * 0.25 + (taxableIncome - 82250) * 0.28;
+            else if (taxableIncome <= 372950)
+                tax = 8350 * 0.10 + (33950 - 8350) * 0.15 +
+                        (82250 - 33950) * 0.25 + (171550 - 82250) * 0.28 +
+                        (taxableIncome - 171550) * 0.33;
+            else
+                tax = 8350 * 0.10 + (33950 - 8350) * 0.15 +
+                        (82250 - 33950) * 0.25 + (171550 - 82250) * 0.28 +
+                        (372950 - 171550) * 0.33 + (taxableIncome - 372950) * 0.35;
+
+        }
+
+        System.out.println("Tax is " + (int)(tax * 100) / 100.0);
+        System.out.println("Tax is " + taxCalc.getTax());
+
     }
 }
