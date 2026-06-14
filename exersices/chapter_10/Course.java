@@ -6,7 +6,7 @@ import java.util.StringJoiner;
 public class Course {
     private String courseName;
     private String[] students = new String[3];
-    private static int numberOfStudents;
+    private int numberOfStudents;
 
     public Course(String courseName) {
         this.courseName = courseName;
@@ -22,7 +22,7 @@ public class Course {
     }
 
     private void resizeAndAdd(String student) {
-        String[] newStudentArray = Arrays.copyOf(students, (students.length + 10));
+        String[] newStudentArray = Arrays.copyOf(students, (students.length * 2));
         this.students = newStudentArray;
         students[numberOfStudents] = student;
         numberOfStudents++;
@@ -42,7 +42,7 @@ public class Course {
 
     // Exercise hear
     public void dropStudent(String student) {
-        for (int i = 0; i < students.length; i++) {
+        for (int i = 0; i < numberOfStudents; i++) {
             if (students[i] != null && students[i].equals(student)) {
                 students[i] = null;
                 numberOfStudents--;
@@ -86,12 +86,12 @@ public class Course {
         course.addStudent("Osama");
         course.addStudent("omar");
 
-        IO.println(course.showStudents() + " " + Course.numberOfStudents);
+        IO.println(course.showStudents() + " " + course.numberOfStudents);
         
         course.dropStudent("Mohamed");
         course.dropStudent("omar");
 
-        IO.println(course.showStudents() + " " + Course.numberOfStudents);
+        IO.println(course.showStudents() + " " + course.numberOfStudents);
 
     }
 }
