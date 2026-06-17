@@ -4,11 +4,11 @@ void main()
 {
     double pi = 4 * ( 1.0 - 1/3 + 1/5 - 1/7 + 1/9 - 1/11 + 1/13);
 
-    // population();
+    // int[] arr = reverseArray(new int[] {1, 2, 3, 4});
 
-    int[] arr = reverseArray(new int[] {1, 2, 3, 4});
+    // IO.println(Arrays.toString(arr));
 
-    IO.println(Arrays.toString(arr));
+    numberOfYears(100000000);
     
 }
 
@@ -49,4 +49,20 @@ int[] reverseArray(int[] arr)
         end--;
     }
     return arr;
+}
+
+
+/**
+ * (Find the number of years) Write a program that prompts the user to enter the
+ * minutes (e.g., 1 billion), and displays the number of years and days for the minutes. 
+ * For simplicity, assume a year has 365 days.
+ * 
+ * @param minutes
+ */
+void numberOfYears(int minutes) 
+{
+    int daysFromMinutes = (minutes / 60) / 24;
+    int numberOfYears = daysFromMinutes / 365;
+    int numberOfDays = numberOfYears > 0 ? daysFromMinutes % numberOfYears : daysFromMinutes;
+    IO.println(String.format("%,d minutes is approximately %d years and %d days", minutes, numberOfYears, numberOfDays));
 }
