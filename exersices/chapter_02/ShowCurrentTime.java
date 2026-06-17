@@ -2,6 +2,12 @@ package exersices.chapter_02;
 
 public class ShowCurrentTime {
     public static void main(String[] args) {
+        int offset = Integer.parseInt(IO.readln("Enter the time zone offset to GMT: "));
+        time(offset);
+    }
+
+    public static void time(int offset) {
+        
         long totalMilliseconds = System.currentTimeMillis();
         
         long totalSeconds = totalMilliseconds / 1000;
@@ -19,7 +25,7 @@ public class ShowCurrentTime {
         String minute = currentMinute < 10 ? "0" + currentMinute : "" + currentMinute;
         String second = currentSecond < 10 ? "0" + currentSecond : "" + currentSecond;
 
-        IO.println("current time " + hour((currentHour + 2), false) + ":" +  minute + ":" +  second);
+        IO.println("current time " + hour((currentHour + offset), false) + ":" +  minute + ":" +  second);
     }
 
     public static String hour(long n, boolean is24) 
