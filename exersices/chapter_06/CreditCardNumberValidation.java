@@ -80,8 +80,7 @@ public class CreditCardNumberValidation {
 
 
     public static void main(String[] args) {
-        String creditCard = "4388576018410707";// String.valueOf(IO.readln("Enter a credit card number as a long
-                                               // integer: "));
+        String creditCard = String.valueOf(IO.readln("Enter a credit card number as a long integer: "));
         if (isValid(creditCard)) {
             IO.println(creditCard + " is valid");
         } else {
